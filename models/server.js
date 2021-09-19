@@ -1,5 +1,6 @@
 const express = require('express');
 const cors = require('cors');
+const { dbConnection } = require('../database/config');
 
 class Server {
     constructor(){
@@ -8,11 +9,19 @@ class Server {
         this.port = process.env.PORT;
         this.userPath = '/api/users';
 
+        //Conexion a la base de datos
+        this.connectDB();
+
         //Middlewares
         this.middlewares();
 
         //Rutas de mi aplicacion
         this.routes();
+    }
+
+    async connectDB(){
+        //Conexion con MongoDB
+        await dbConnection();
     }
 
     middlewares(){
@@ -22,6 +31,8 @@ class Server {
         this.app.use(express.json());
         //Archivos estaticos
         this.app.use(express.static('public'));
+        //Acepta informacion que viene del Frontend
+        this.app.use(express.urlencoded({extended: false}));
     }
 
     routes(){
