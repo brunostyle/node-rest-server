@@ -7,8 +7,8 @@ const { isRoleValid, emailExist, userByIdExist } = require('../helpers/db-valida
 
 //Route getUsers
 router.get('/', [
-    check('limit', 'El limite debe ser un numero').isNumeric(),
-    check('from', 'El from debe ser un numero').isNumeric(),
+    check('limit', 'El limite debe ser un valor numerico').isNumeric(),
+    check('from', 'El from debe ser un valor numerico').isNumeric(),
     validateFields
 ], getUsers)
 
