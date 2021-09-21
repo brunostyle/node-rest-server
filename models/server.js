@@ -29,7 +29,7 @@ class Server {
 
     middlewares(){
         //Cors
-        // this.app.use(cors());
+        this.app.use(cors());
         //Json body
         this.app.use(express.json());
         //Archivos estaticos
