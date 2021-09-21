@@ -1,6 +1,5 @@
 //Requires
 const { request, response } = require('express');
-const { findById } = require('../models/User');
 const User = require('../models/User');
 
 //Controller getUsers 
@@ -8,6 +7,10 @@ const getUsers = async (req = request, res = response) => {
     const { limit = 5, from = 0 } = req.query;
     const query = {state: true};
     try {
+        //Verifica si el limite y el from son numeros
+        if(isNaN(limit)) return res.status(400).json({msg: 'El limite debe ser un valor numerico'});
+        if(isNaN(from)) return res.status(400).json({msg: 'El from debe ser un valor numerico'});
+
         //PROMISE.ALL resuelve multiples promesas al mismo tiempo
         const [count, users] = await Promise.all([
             User.countDocuments(query),

@@ -40,13 +40,14 @@ userSchema.statics.encryptPassword = async (password) => {
 }
 
 //Desencripta la contraseña y la compara con otra
-userSchema.statics.comparePassword = async (password, receivedPassword) => {
-    return await bcrypt.compare(password, receivedPassword);
+userSchema.statics.comparePassword = async (receivedPassword, password) => {
+    return bcrypt.compareSync(receivedPassword, password);
 }
 
 //Extrae los campos que quieras y no los manda al cliente
 userSchema.methods.toJSON = function(){
-    const { password, ...user } = this.toObject();
+    const { password, _id, ...user } = this.toObject();
+    user.uid = _id;
     return user;
 }
 
